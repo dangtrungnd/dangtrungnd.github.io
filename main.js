@@ -2,19 +2,20 @@
 const socket = io('https://video3306.herokuapp.com/');
 
 $('#infoCall').hide();
-var ice;
-$(function(){
-        // Get Xirsys ICE (STUN/TURN)
-        if(!ice){
-            ice = new $xirsys.ice('/webrtc');
-            ice.on(ice.onICEList, function (evt){
-                console.log('onICE ',evt);
-                if(evt.type == ice.onICEList){
-                    create(ice.iceServers);
-                }
-            });
-        }
-});
+
+let customConfig;
+
+ $.ajax ({
+     url: "https://global.xirsys.net/_turn/dangtrungnd.github.io/",
+     type: "PUT",
+     async: false,
+     headers: {
+       "Authorization": "Basic " + btoa("overheo:7e5c7206-1de0-11e9-abd2-0242ac110003")
+     },
+     success: function (res){
+       customConfig = res.v.iceServers;
+     }
+ });
 
 socket.on('list_user_online', arrUserInfo =>{
 	$('#infoCall').show();
@@ -54,7 +55,7 @@ const	peer = new Peer({
 			host: "my-peer3306.herokuapp.com",
 			port: 443,
 			secure: true,
-		    config: ice.iceServers
+		    config: customConfig
 		});
 
 //get peer id
