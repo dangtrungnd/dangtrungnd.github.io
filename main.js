@@ -39,6 +39,7 @@ socket.on('register_faild', () =>  alert('Name is exist, please choose new name!
 
 function openStream() {
 	const config = { audio:false, video:true };
+	var getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia).bind(navigator);
 	return navigator.mediaDevices.getUserMedia(config);
 }
 function playStream(idVideoTag, stream) {
