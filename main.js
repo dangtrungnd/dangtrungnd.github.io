@@ -8,7 +8,7 @@ let customConfig;
  $.ajax ({
      url: "https://global.xirsys.net/_turn/dangtrungnd.github.io/",
      type: "PUT",
-     async: false,
+     async: true,
      headers: {
        "Authorization": "Basic " + btoa("overheo:7e5c7206-1de0-11e9-abd2-0242ac110003")
      },
