@@ -1,5 +1,5 @@
 //client
-const socket = io('');
+const socket = io('https://video3306.herokuapp.com/');
 
 $('#infoCall').hide();
 
