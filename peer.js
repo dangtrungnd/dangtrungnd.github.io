@@ -321,7 +321,7 @@ util.inherits(MediaConnection, EventEmitter);
 
 MediaConnection._idPrefix = 'mc_';
 
-MediaConnection.prototype.addStream = function(remoteStream) {
+MediaConnection.prototype.addTrack = function(remoteStream) {
   util.log('Receiving stream', remoteStream);
 
   this.remoteStream = remoteStream;
@@ -413,7 +413,7 @@ Negotiator.startConnection = function(connection, options) {
 
   if (connection.type === "media" && options._stream) {
     // Add the stream.
-    pc.addStream(options._stream);
+    pc.addTrack(options._stream);
   }
 
   // What do we need to do now?
@@ -577,13 +577,13 @@ Negotiator._setupListeners = function(connection, pc, pc_id) {
     util.log("Received remote stream");
     var stream = evt.stream;
     var connection = provider.getConnection(peerId, connectionId);
-    // 10/10/2014: looks like in Chrome 38, onaddstream is triggered after
+    // 10/10/2014: looks like in Chrome 38, onaddTrack is triggered after
     // setting the remote description. Our connection object in these cases
-    // is actually a DATA connection, so addStream fails.
+    // is actually a DATA connection, so addTrack fails.
     // TODO: This is hopefully just a temporary fix. We should try to
     // understand why this is happening.
     if (connection.type === "media") {
-      connection.addStream(stream);
+      connection.addTrack(stream);
     }
   };
 };
@@ -1658,7 +1658,7 @@ var util = {
 
     // FIXME: not really the best check...
     if (audioVideo) {
-      audioVideo = !!pc.addStream;
+      audioVideo = !!pc.addTrack;
     }
 
     // FIXME: this is not great because in theory it doesn't work for
@@ -3079,3 +3079,4 @@ var util = {
 module.exports = util;
 
 },{"js-binarypack":10}]},{},[3]);
+
