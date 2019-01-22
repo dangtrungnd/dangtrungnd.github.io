@@ -63,6 +63,7 @@ peer.on('open', id => {
     $('#my-peer').append(id);
     $('#btnSignUp').click(() => {
 	    const userName = $('#txtUserName').val();
+	    $('#my-name').append(userName);
 	    socket.emit('user_register', { name: userName, peerId: id });
 	});
 });
